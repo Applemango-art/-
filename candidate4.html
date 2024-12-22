@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기호 4: 김가빈</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .container {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    .comment-section {
+      flex: 1;
+      max-width: 500px;
+    }
+    input, textarea {
+      width: 100%;
+      font-size: 18px;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-top: 10px;
+      font-size: 16px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .feedback-section {
+      margin-top: 10px;
+    }
+    .feedback-input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .feedback-input textarea {
+      height: 100px;
+      resize: vertical; /* 사용자 크기 조정 가능 */
+    }
+    .feedback-list li {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="image-container">
+      <h1>기호 4: 김가빈</h1>
+      <img src="./image/candidate4.jpg" alt="기호 4 김가빈 포스터" style="width:100%; max-width:600px;">
+    </div>
+    <div class="comment-section">
+      <h2>공약에 대한 의견을 작성하세요:</h2>
+      <input type="text" id="name" placeholder="이름을 입력하세요">
+      <textarea id="comment" placeholder="의견을 입력하세요(공약번호를 포함)"></textarea>
+      <button onclick="submitComment()">의견 제출</button>
+      <h3>의견 목록:</h3>
+      <ul id="commentsList"></ul>
+    </div>
+  </div>
+  <script>
+    function submitComment() {
+      // 이름과 의견 입력값 가져오기
+      const nameInput = document.getElementById('name');
+      const commentInput = document.getElementById('comment');
+      const commentsList = document.getElementById('commentsList');
+
+      const name = nameInput.value.trim();
+      const comment = commentInput.value.trim();
+
+      // 이름과 의견 둘 다 입력했는지 확인
+      if (!name || !comment) {
+        alert("이름과 의견을 모두 입력해주세요!");
+        return;
+      }
+
+      // 새로운 의견 항목 추가
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `<strong>${name}</strong>: ${comment}`;
+
+      // 피드백 입력창 추가
+      const feedbackSection = document.createElement('div');
+      feedbackSection.className = 'feedback-section';
+      feedbackSection.innerHTML = `
+        <h4>피드백 작성:</h4>
+        <div class="feedback-input">
+          <textarea placeholder="피드백을 입력하세요"></textarea>
+          <button onclick="submitFeedback(this)">피드백 제출</button>
+        </div>
+        <ul class="feedback-list"></ul>
+      `;
+      listItem.appendChild(feedbackSection);
+      commentsList.appendChild(listItem);
+
+      // 입력 필드 초기화
+      nameInput.value = '';
+      commentInput.value = '';
+    }
+
+    function submitFeedback(button) {
+      const feedbackInput = button.previousElementSibling;
+      const feedbackText = feedbackInput.value.trim();
+      const feedbackList = button.parentElement.nextElementSibling;
+
+      if (!feedbackText) {
+        alert("피드백을 입력해주세요!");
+        return;
+      }
+
+      // 피드백 항목 추가
+      const feedbackItem = document.createElement('li');
+      feedbackItem.textContent = feedbackText;
+      feedbackList.appendChild(feedbackItem);
+
+      // 피드백 입력 필드 초기화
+      feedbackInput.value = '';
+    }
+  </script>
+</body>
+</html>
